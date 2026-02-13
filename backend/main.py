@@ -29,6 +29,25 @@ PLATFORM_TEMPLATES = {
     ]
 }
 
+@app.route('/', methods=['GET'])
+def index():
+    return jsonify({
+        "status": "online",
+        "message": "SocialGen AI API is running! Use /api/generate (POST) for content."
+    })
+
+@app.route('/api/login', methods=['POST'])
+def login():
+    data = request.json
+    username = data.get('username')
+    password = data.get('password')
+    
+    # Simple mock logic
+    if username == "admin" and password == "password":
+        return jsonify({"status": "success", "message": "Login successful!"})
+    else:
+        return jsonify({"status": "error", "message": "Invalid username or password"}), 401
+
 @app.route('/api/generate', methods=['POST'])
 def generate_content():
     data = request.json
@@ -49,11 +68,21 @@ def generate_content():
     elif tone == "inspirational":
         content = "✨ " + content + " #Believe"
 
+    # Generate mock hashtags
+    hashtags = [f"#{topic.replace(' ', '')}", f"#{platform}", f"#{tone}", "#SocialGenAI"]
+
     return jsonify({
         "platform": platform,
         "content": content,
-        "topic": topic
+        "topic": topic,
+        "hashtags": hashtags,
+        "metadata": {
+            "char_count": len(content),
+            "reading_time": "1 min",
+            "suggested_hashtags": hashtags
+        }
     })
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    # Binding to 0.0.0.0 for maximum accessibility
+    app.run(debug=True, host='0.0.0.0', port=5000)

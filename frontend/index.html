@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SocialGen AI | Content Generator</title>
+    <title>SocialGen AI | Advanced Content Studio</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
+    <div class="mesh-bg"></div>
     <div class="app-container">
         <aside class="sidebar">
             <div class="logo">
@@ -36,40 +41,49 @@
             <section class="generator-section">
                 <div class="input-card">
                     <h2>Content Parameters</h2>
+
+                    <div class="platform-tabs" id="platform-tabs">
+                        <div class="tab-item active" data-platform="twitter">
+                            <span class="tab-icon">🐦</span>
+                            <span class="tab-label">Twitter</span>
+                        </div>
+                        <div class="tab-item" data-platform="linkedin">
+                            <span class="tab-icon">💼</span>
+                            <span class="tab-label">LinkedIn</span>
+                        </div>
+                        <div class="tab-item" data-platform="instagram">
+                            <span class="tab-icon">📸</span>
+                            <span class="tab-label">Instagram</span>
+                        </div>
+                        <div class="tab-item" data-platform="facebook">
+                            <span class="tab-icon">👥</span>
+                            <span class="tab-label">Facebook</span>
+                        </div>
+                    </div>
+
                     <form id="generator-form">
                         <div class="form-group">
                             <label for="topic">Topic / Subject</label>
                             <input type="text" id="topic" placeholder="e.g. Artificial Intelligence" required>
                         </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="platform">Platform</label>
-                                <select id="platform">
-                                    <option value="twitter">Twitter / X</option>
-                                    <option value="linkedin">LinkedIn</option>
-                                    <option value="instagram">Instagram</option>
-                                    <option value="facebook">Facebook</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="tone">Tone</label>
-                                <select id="tone">
-                                    <option value="professional">Professional</option>
-                                    <option value="humorous">Humorous</option>
-                                    <option value="inspirational">Inspirational</option>
-                                </select>
-                            </div>
+
+                        <div class="form-group">
+                            <label for="tone">Tone of Voice</label>
+                            <select id="tone">
+                                <option value="professional">Professional & Polished</option>
+                                <option value="humorous">Funny & Engaging</option>
+                                <option value="inspirational">Motivational & Bold</option>
+                            </select>
                         </div>
 
                         <div class="form-group">
                             <label for="target">Target Audience</label>
-                            <input type="text" id="target" placeholder="e.g. Entrepreneurs">
+                            <input type="text" id="target" placeholder="e.g. Entrepreneurs or Techies">
                         </div>
 
                         <button type="submit" id="generate-btn" class="primary-btn">
-                            <span class="btn-text">Generate Magic</span>
-                            <span class="loader" id="loader"></span>
+                            <span class="btn-text">Generate Content</span>
+                            <div class="loader" id="loader"></div>
                         </button>
                     </form>
                 </div>
@@ -82,6 +96,36 @@
             </section>
         </main>
     </div>
+    <!-- Settings Modal -->
+    <div class="modal" id="settings-modal" style="display: none;">
+        <div class="modal-content input-card">
+            <div class="modal-header">
+                <h2>Studio Settings</h2>
+                <button class="close-btn" id="close-settings">&times;</button>
+            </div>
+            <form id="settings-form">
+                <div class="form-group">
+                    <label for="api-key">OpenAI / Claude API Key</label>
+                    <input type="password" id="api-key" placeholder="sk-xxxx...">
+                </div>
+                <div class="form-group">
+                    <label for="default-tone">Preferred Default Tone</label>
+                    <select id="default-tone">
+                        <option value="professional">Professional</option>
+                        <option value="humorous">Humorous</option>
+                        <option value="inspirational">Inspirational</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="custom-instructions">Custom System Instructions</label>
+                    <textarea id="custom-instructions" rows="3" placeholder="Always end with a question..."></textarea>
+                </div>
+                <button type="submit" class="primary-btn">Save Preferences</button>
+            </form>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
+
 </html>
