@@ -8,6 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let activePlatform = 'twitter';
 
+    // Brand Identity State
+    let brandName = localStorage.getItem('socialgen_brand_name') || 'SocialStudio';
+    let brandHandle = localStorage.getItem('socialgen_brand_handle') || '@studio_ai';
+
     // Handle Tab Switching
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
@@ -56,6 +60,62 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    function updateDevicePreview(data = null) {
+        const previewEl = document.getElementById('device-preview');
+        if (!data) {
+            previewEl.innerHTML = `<div class="preview-placeholder" style="color: #64748b; padding: 2rem; text-align: center;">Wait for generation...</div>`;
+            return;
+        }
+
+        const platform = data.platform;
+        let previewHtml = '';
+
+        if (platform === 'twitter') {
+            previewHtml = `
+                <div class="tw-nav" style="padding: 12px; border-bottom: 1px solid #eee;">
+                    <strong>Post</strong>
+                </div>
+                <div class="tw-post" style="padding: 12px;">
+                    <div style="display: flex; gap: 10px;">
+                        <div style="width: 48px; height: 48px; background: #eee; border-radius: 50%;"></div>
+                        <div>
+                            <strong>${brandName}</strong> <span style="color: #666;">${brandHandle}</span>
+                            <p style="margin-top: 5px; font-size: 15px;">${data.content}</p>
+                            <div style="color: #1d9bf0; margin-top: 8px;">${data.hashtags.join(' ')}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (platform === 'instagram') {
+            previewHtml = `
+                <div class="ig-header" style="padding: 10px; display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 32px; height: 32px; background: #eee; border-radius: 50%;"></div>
+                    <strong>${brandName}</strong>
+                </div>
+                <div style="width: 100%; aspect-ratio: 1; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #999;">
+                    [ Platform Media Preview ]
+                </div>
+                <div style="padding: 12px;">
+                    <strong>${brandName}</strong> ${data.content}
+                    <div style="color: #00376b; margin-top: 5px;">${data.hashtags.join(' ')}</div>
+                </div>
+            `;
+        } else {
+            previewHtml = `
+                <div style="padding: 20px; font-size: 14px;">
+                    <strong>${brandName}</strong> posted:<br><br>
+                    ${data.content}<br><br>
+                    ${data.hashtags.join(' ')}
+                </div>
+            `;
+        }
+
+        previewEl.innerHTML = previewHtml;
+    }
+
+    // Initial Preview State
+    updateDevicePreview();
+
     // Settings Logic
     const settingsModal = document.getElementById('settings-modal');
     const settingsForm = document.getElementById('settings-form');
@@ -70,10 +130,12 @@ document.addEventListener('DOMContentLoaded', () => {
             item.classList.add('active');
 
             if (item.textContent === 'History') {
-                alert('History feature coming soon! Your previous generations will appear here.');
+                alert('History feature coming soon!');
             } else if (item.textContent === 'Settings') {
                 settingsModal.style.display = 'flex';
                 // Load existing settings
+                document.getElementById('brand-name').value = localStorage.getItem('socialgen_brand_name') || '';
+                document.getElementById('brand-handle').value = localStorage.getItem('socialgen_brand_handle') || '';
                 document.getElementById('api-key').value = localStorage.getItem('socialgen_api_key') || '';
                 document.getElementById('default-tone').value = localStorage.getItem('socialgen_tone') || 'professional';
                 document.getElementById('custom-instructions').value = localStorage.getItem('socialgen_instructions') || '';
@@ -88,6 +150,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     settingsForm.addEventListener('submit', (e) => {
         e.preventDefault();
+        brandName = document.getElementById('brand-name').value || 'SocialStudio';
+        brandHandle = document.getElementById('brand-handle').value || '@studio_ai';
+
+        localStorage.setItem('socialgen_brand_name', brandName);
+        localStorage.setItem('socialgen_brand_handle', brandHandle);
         localStorage.setItem('socialgen_api_key', document.getElementById('api-key').value);
         localStorage.setItem('socialgen_tone', document.getElementById('default-tone').value);
         localStorage.setItem('socialgen_instructions', document.getElementById('custom-instructions').value);
@@ -95,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update current form tone if it matches default
         document.getElementById('tone').value = document.getElementById('default-tone').value;
 
-        alert('Settings saved successfully! ✨');
+        alert('Studio Identity Updated! ✨');
         settingsModal.style.display = 'none';
         navItems[0].click();
     });
