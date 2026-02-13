@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocialGen AI | Content Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <span class="logo-icon">✨</span>
+                <span class="logo-text">SocialGen AI</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active">Dashboard</a>
+                <a href="#" class="nav-item">History</a>
+                <a href="#" class="nav-item">Settings</a>
+            </nav>
+            <div class="sidebar-footer">
+                <p>Version 1.0.0</p>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <h1>Generate Content</h1>
+                <div class="user-profile">
+                    <span>Admin</span>
+                    <div class="avatar"></div>
+                </div>
+            </header>
+
+            <section class="generator-section">
+                <div class="input-card">
+                    <h2>Content Parameters</h2>
+                    <form id="generator-form">
+                        <div class="form-group">
+                            <label for="topic">Topic / Subject</label>
+                            <input type="text" id="topic" placeholder="e.g. Artificial Intelligence" required>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="platform">Platform</label>
+                                <select id="platform">
+                                    <option value="twitter">Twitter / X</option>
+                                    <option value="linkedin">LinkedIn</option>
+                                    <option value="instagram">Instagram</option>
+                                    <option value="facebook">Facebook</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="tone">Tone</label>
+                                <select id="tone">
+                                    <option value="professional">Professional</option>
+                                    <option value="humorous">Humorous</option>
+                                    <option value="inspirational">Inspirational</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="target">Target Audience</label>
+                            <input type="text" id="target" placeholder="e.g. Entrepreneurs">
+                        </div>
+
+                        <button type="submit" id="generate-btn" class="primary-btn">
+                            <span class="btn-text">Generate Magic</span>
+                            <span class="loader" id="loader"></span>
+                        </button>
+                    </form>
+                </div>
+
+                <div class="output-panel" id="output-panel">
+                    <div class="placeholder-content" id="placeholder-content">
+                        <p>Fill out the parameters and click generate to see the magic happen!</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
